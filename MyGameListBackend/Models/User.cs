@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,7 @@ namespace MyGameList.Models
 
         [Required]
         [MaxLength(80)]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [MaxLength(40)]
@@ -28,6 +29,15 @@ namespace MyGameList.Models
         [DefaultValue(true)]
         public bool IsActive { get; set; }
 
-        public ICollection<Game>? Games { get; set; }
+        [Required]
+        public DateTime SignUpSince { get; set; }
+
+        public DateTime LastLogin { get; set; }
+
+        /// <summary>
+        /// Relationship for EF Core, between mother User class and child Tracker class.
+        /// </summary>
+        [Required]
+        public ICollection<Tracker> Tracker { get; set; }
     }
 }

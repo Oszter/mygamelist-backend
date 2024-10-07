@@ -27,9 +27,9 @@ namespace MyGameList
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyGameList", Version = "v1" });
             });
 
-            services.AddSqlite<GameListContext>("Data Source=MyGameList.db");
+            services.AddSqlite<MyGameListContext>("Data Source=MyGameList.db");
 
-            services.AddScoped<GameService>();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

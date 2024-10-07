@@ -9,7 +9,7 @@ using MyGameList.Data;
 
 namespace MyGameListBackend.Migrations
 {
-    [DbContext(typeof(GameListContext))]
+    [DbContext(typeof(MyGameListContext))]
     partial class GameListContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -17,52 +17,36 @@ namespace MyGameListBackend.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("GameUser", b =>
-                {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("GamesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("GameUser");
-                });
-
-            modelBuilder.Entity("MyGameList.Models.Game", b =>
+            modelBuilder.Entity("MyGameList.Models.Tracker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<int>("TrackerCategoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(180)
-                        .HasColumnType("TEXT");
+                    b.HasKey("Id");
 
-                    b.Property<string>("Poster")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.HasIndex("TrackerCategoryId");
 
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("TEXT");
+                    b.ToTable("Tracker");
+                });
 
-                    b.Property<int>("Score")
+            modelBuilder.Entity("MyGameList.Models.TrackerCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Summary")
+                    b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games");
+                    b.ToTable("TrackerCategory");
                 });
 
             modelBuilder.Entity("MyGameList.Models.User", b =>
@@ -79,6 +63,9 @@ namespace MyGameListBackend.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("LastLogin")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -94,16 +81,45 @@ namespace MyGameListBackend.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("SignUpSince")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("GameUser", b =>
+            modelBuilder.Entity("TrackerUser", b =>
                 {
-                    b.HasOne("MyGameList.Models.Game", null)
+                    b.Property<int>("TrackerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TrackerId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("TrackerUser");
+                });
+
+            modelBuilder.Entity("MyGameList.Models.Tracker", b =>
+                {
+                    b.HasOne("MyGameList.Models.TrackerCategory", "TrackerCategory")
                         .WithMany()
-                        .HasForeignKey("GamesId")
+                        .HasForeignKey("TrackerCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrackerCategory");
+                });
+
+            modelBuilder.Entity("TrackerUser", b =>
+                {
+                    b.HasOne("MyGameList.Models.Tracker", null)
+                        .WithMany()
+                        .HasForeignKey("TrackerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

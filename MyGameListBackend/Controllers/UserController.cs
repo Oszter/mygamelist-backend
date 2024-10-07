@@ -7,18 +7,18 @@ namespace MyGameList.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GameController(GameService service) : ControllerBase
+    public class UserController(UserService service) : ControllerBase
     {
-        readonly GameService _service = service;
+        readonly UserService _service = service;
 
         [HttpGet]
-        public IEnumerable<Game> GetAll()
+        public IEnumerable<User> GetAll()
         {
             return _service.GetAll();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Game> GetById(int id)
+        public ActionResult<User> GetById(int id)
         {
             var game = _service.GetById(id);
 

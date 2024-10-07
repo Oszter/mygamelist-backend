@@ -4,19 +4,19 @@ using MyGameList.Models;
 
 namespace MyGameList.Services
 {
-    public class GameService
+    public class UserService
     {
-        public GameService()
+        public UserService()
         {
 
         }
 
-        public IEnumerable<Game> GetAll()
+        public IEnumerable<User> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Game? GetById(int id)
+        public User? GetById(int id)
         {
             throw new NotImplementedException();
         }
