@@ -11,5 +11,9 @@ namespace MyGameList.Data
         public DbSet<TrackerCategory> TrackerCategory => Set<TrackerCategory>();
         public DbSet<Game> Game => Set<Game>();
         public DbSet<Genre> Genre => Set<Genre>();
+
+        public DbSet<Platform> Platform => Set<Platform>();
+
+        public DbSet<OperationalSystem> OperationalSystem => Set<OperationalSystem>();
     }
 }
