@@ -5,39 +5,39 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyGameList.Models
 {
-    public class User
+    public class User(string name, string nickname, string email, string password, bool isActive, DateTime signUpSince, DateTime lastLogin, ICollection<Tracker> tracker)
     {
         public int Id { get; set; }
 
         [Required]
         [MaxLength(80)]
-        public string Name { get; set; }
+        public string Name { get; set; } = name;
 
         [Required]
         [MaxLength(40)]
-        public string Nickname { get; set; }
+        public string Nickname { get; set; } = nickname;
 
         [Required]
         [MaxLength(80)]
-        public string Email { get; set; }
+        public string Email { get; set; } = email;
 
         [Required]
         [MaxLength(80)]
-        public string Password { get; set; }
+        public string Password { get; set; } = password;
 
         [Required]
         [DefaultValue(true)]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = isActive;
 
         [Required]
-        public DateTime SignUpSince { get; set; }
+        public DateTime SignUpSince { get; set; } = signUpSince;
 
-        public DateTime LastLogin { get; set; }
+        public DateTime LastLogin { get; set; } = lastLogin;
 
         /// <summary>
         /// Relationship for EF Core, between mother User class and child Tracker class.
         /// </summary>
         [Required]
-        public ICollection<Tracker> Tracker { get; set; }
+        public ICollection<Tracker> Tracker { get; set; } = tracker;
     }
 }
