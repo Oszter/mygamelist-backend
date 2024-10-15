@@ -18,7 +18,7 @@ namespace MyGameList.Models
         /// <summary>
         /// Relationship for EF Core, between child Tracker class and mother User class.
         /// </summary>
-        [JsonIgnore]
-        public ICollection<User> Users { get; set; }
+        [Required]
+        public User User { get; set; }
     }
 }

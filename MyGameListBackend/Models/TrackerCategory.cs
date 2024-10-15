@@ -9,6 +9,5 @@ namespace MyGameList.Models
         [Required]
         [MaxLength(20)]
         public string Description { get; set; }
-
     }
 }
