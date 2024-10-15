@@ -1,25 +1,23 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MyGameList.Models
 {
-    public class Platform (string Name, string OperatingSystem, OperationalSystem OperationalSystem)
+    public class Platform
     {
 
         public int Id { get; set; }
 
         [Required]
         [MaxLength(80)]
-        public string Name { get; set; } = Name;
+        public string Name { get; set; }
 
         [Required]
-        [MaxLength(80)]
-        public string OperatingSystem { get; set; } = OperatingSystem;
+        public OperationalSystem OperationalSystem { get; set; }
 
         [Required]
-        public OperationalSystem OperationalSystem { get; set; } = OperationalSystem;
-
-        [Required]
+        [JsonIgnore]
         public ICollection<Game> Game { get; set; }
 
     }

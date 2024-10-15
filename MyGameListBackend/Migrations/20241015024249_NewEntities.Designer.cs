@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyGameList.Data;
 
@@ -10,9 +11,11 @@ using MyGameList.Data;
 namespace MyGameListBackend.Migrations
 {
     [DbContext(typeof(MyGameListContext))]
-    partial class GameListContextModelSnapshot : ModelSnapshot
+    [Migration("20241015024249_NewEntities")]
+    partial class NewEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -22,12 +25,12 @@ namespace MyGameListBackend.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("GenresId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("GameId", "GenresId");
+                    b.HasKey("GameId", "GenreId");
 
-                    b.HasIndex("GenresId");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("GameGenre");
                 });
@@ -37,29 +40,14 @@ namespace MyGameListBackend.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PlatformsId")
+                    b.Property<int>("PlatformId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("GameId", "PlatformsId");
+                    b.HasKey("GameId", "PlatformId");
 
-                    b.HasIndex("PlatformsId");
+                    b.HasIndex("PlatformId");
 
                     b.ToTable("GamePlatform");
-                });
-
-            modelBuilder.Entity("GameTracker", b =>
-                {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TrackersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("GamesId", "TrackersId");
-
-                    b.HasIndex("TrackersId");
-
-                    b.ToTable("GameTracker");
                 });
 
             modelBuilder.Entity("MyGameList.Models.Game", b =>
@@ -153,7 +141,7 @@ namespace MyGameListBackend.Migrations
                     b.Property<int>("TrackerCategoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -231,7 +219,7 @@ namespace MyGameListBackend.Migrations
 
                     b.HasOne("MyGameList.Models.Genre", null)
                         .WithMany()
-                        .HasForeignKey("GenresId")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -246,22 +234,7 @@ namespace MyGameListBackend.Migrations
 
                     b.HasOne("MyGameList.Models.Platform", null)
                         .WithMany()
-                        .HasForeignKey("PlatformsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GameTracker", b =>
-                {
-                    b.HasOne("MyGameList.Models.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyGameList.Models.Tracker", null)
-                        .WithMany()
-                        .HasForeignKey("TrackersId")
+                        .HasForeignKey("PlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -285,11 +258,15 @@ namespace MyGameListBackend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyGameList.Models.User", null)
+                    b.HasOne("MyGameList.Models.User", "User")
                         .WithMany("Tracker")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TrackerCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MyGameList.Models.User", b =>

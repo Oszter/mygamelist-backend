@@ -2,33 +2,38 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MyGameList.Models
 {
-    public class Game(string name, string summary, int score, string poster, DateTime releaseDate)
+    public class Game
     {
         public int Id { get; set; }
 
         [Required]
         [MaxLength(180)]
-        public string Name { get; set; } = name;
+        public string Name { get; set; }
 
         [Required]
-        public string Summary { get; set; } = summary;
+        public string Summary { get; set; }
 
         [Required]
-        public int Score { get; set; } = score;
+        public int Score { get; set; }
 
         [Required]
-        public string Poster { get; set; } = poster;
+        public string Poster { get; set; }
 
         [Required]
-        public DateTime ReleaseDate { get; set; } = releaseDate;
+        public DateTime ReleaseDate { get; set; }
 
         [Required]
-        public ICollection<Genre> Genre { get; set; }
+        public ICollection<Genre> Genres { get; set; }
 
         [Required]
-        public ICollection<Platform> Platform { get; set; }
+        public ICollection<Platform> Platforms { get; set; }
+
+        [Required]
+        [JsonIgnore]
+        public ICollection<Tracker> Trackers { get; set; }
     }
 }
